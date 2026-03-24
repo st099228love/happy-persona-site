@@ -394,7 +394,7 @@ async function nextPage() {
       state.isSubmitting = false;
       elements.nextBtn.disabled = false;
       elements.nextBtn.textContent = '查看測驗結果';
-      alert('送出時出了點問題，請再試一次。');
+      alert('送出失敗：' + error.message);
     }
 
     return;
