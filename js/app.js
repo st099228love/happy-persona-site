@@ -13,7 +13,7 @@ const screens = {
 
 const elements = {
   startBtn: document.getElementById('start-btn'),
-  header: document.getElementById('page-header'),
+  pageHeader: document.getElementById('page-header'),
   questionList: document.getElementById('question-list'),
   prevBtn: document.getElementById('prev-btn'),
   nextBtn: document.getElementById('next-btn'),
@@ -95,7 +95,6 @@ function showScreen(name) {
 function startSurvey() {
   state.currentPage = 0;
   showScreen('question');
-  elements.progressWrap.classList.remove('hidden');
   renderCurrentPage();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -108,41 +107,6 @@ function renderCurrentPage() {
   updateProgress();
 }
 
-function getGeometry(type) {
-
-  if (type === 'mind') {
-    return `
-      <div class="cover-geometry small">
-        <div class="geo-layer geo-bg"></div>
-        <div class="geo-layer geo-wave mind-wave"></div>
-        <div class="geo-layer geo-ring"></div>
-        <div class="geo-layer geo-dot dot-a"></div>
-        <div class="geo-layer geo-dot dot-b"></div>
-      </div>
-    `;
-  }
-
-  if (type === 'motive') {
-    return `
-      <div class="cover-geometry small">
-        <div class="geo-layer geo-bg"></div>
-        <div class="geo-layer geo-card motive-box"></div>
-        <div class="geo-layer geo-dot dot-a"></div>
-        <div class="geo-layer geo-dot dot-b"></div>
-      </div>
-    `;
-  }
-
-  // 預設（cinema）
-  return `
-    <div class="cover-geometry small">
-      <div class="geo-layer geo-bg"></div>
-      <div class="geo-layer geo-wave"></div>
-      <div class="geo-layer geo-card"></div>
-      <div class="geo-layer geo-face"></div>
-    </div>
-  `;
-}
 function getGeometryByType(type) {
   if (type === 'mind') {
     return `
@@ -168,7 +132,6 @@ function getGeometryByType(type) {
   `;
 }
 
-
 function renderPageHeader(page) {
   const html = [];
 
@@ -176,8 +139,8 @@ function renderPageHeader(page) {
     html.push(`
       <div class="context-card-simple">
         <div class="context-icon-wrap">
-        ${getGeometryByType(page.iconType)}
-      </div>
+          ${getGeometryByType(page.iconType)}
+        </div>
         <div class="context-content">
           ${page.sectionLabel ? `<div class="context-badge">${page.sectionLabel}</div>` : ''}
           <h2 class="context-main-title">${page.contextText || ''}</h2>
@@ -197,10 +160,15 @@ function renderPageHeader(page) {
     }
   }
 
-  elements.header.innerHTML = html.join('');
+  elements.pageHeader.innerHTML = html.join('');
 }
 
 function renderQuestions(page) {
+  if (page.type === 'consent') {
+    elements.questionList.innerHTML = '';
+    return;
+  }
+
   const html = [];
 
   page.questions.forEach((question, index) => {
@@ -264,18 +232,35 @@ function bindQuestionEvents(page) {
 }
 
 function isLikertPage(page, questionId) {
+  if (!page.questions) return false;
   const q = page.questions.find(item => item.id === questionId);
   return q?.type === 'likert';
 }
 
 function updateNavigation(page) {
   elements.prevBtn.style.visibility = state.currentPage === 0 ? 'hidden' : 'visible';
-  elements.nextBtn.textContent = page.submitLabel || '下一頁';
+
+  let label = page.submitLabel || '下一頁';
+
+  if (page.type === 'consent') {
+    label = '我已閱讀並同意，開始填答';
+  }
+
+  elements.nextBtn.textContent = label;
 }
 
 function updateProgress() {
-  const current = state.currentPage + 1;
-  const total = SURVEY_PAGES.length;
+  const page = SURVEY_PAGES[state.currentPage];
+
+  if (page.type === 'consent') {
+    elements.progressWrap.classList.add('hidden');
+    return;
+  }
+
+  elements.progressWrap.classList.remove('hidden');
+
+  const current = state.currentPage;
+  const total = SURVEY_PAGES.length - 1;
   const percent = Math.round((current / total) * 100);
 
   elements.progressPageText.textContent = `第 ${current} / ${total} 頁`;
@@ -285,12 +270,20 @@ function updateProgress() {
 
 function validateCurrentPage() {
   const page = SURVEY_PAGES[state.currentPage];
-  const missing = page.questions.filter(q => state.answers[q.id] === undefined || state.answers[q.id] === '');
+
+  if (page.type === 'consent') {
+    return true;
+  }
+
+  const missing = page.questions.filter(
+    q => state.answers[q.id] === undefined || state.answers[q.id] === ''
+  );
 
   if (missing.length) {
     alert('這一頁還有題目沒有作答喔，先幫我把它填完～');
     return false;
   }
+
   return true;
 }
 
@@ -389,7 +382,6 @@ function renderResultPage() {
   elements.resultCard.innerHTML = `
     <div class="result-hero">
       <div class="result-text-main">
-      
         <h1 class="result-name">${typeData.name}</h1>
         <p class="result-combo">${typeData.combo}</p>
         <p class="result-tag">${typeData.shortTag}</p>
@@ -445,6 +437,7 @@ function restartSurvey() {
   state.answers = {};
   state.result = null;
   state.currentPage = -1;
+  state.isSubmitting = false;
   showScreen('cover');
   elements.progressWrap.classList.add('hidden');
   window.scrollTo({ top: 0, behavior: 'smooth' });

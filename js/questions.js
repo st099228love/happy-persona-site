@@ -1,5 +1,32 @@
 window.SURVEY_PAGES = [
   {
+    id: 'consent',
+    progressText: '',
+    pageIntroLayout: 'text',
+    introTitle: '填答說明',
+    introText: `
+      親愛的受試者，您好：<br><br>
+      感謝您撥冗填寫本研究問卷。<br><br>
+
+      本研究為國立成功大學企業管理學研究所之學術研究，
+      旨在探討個體於「獨自參與娛樂活動」情境中的空間感知、
+      心理感受與行為意圖。<br><br>
+
+      本問卷採匿名方式蒐集資料，僅供學術研究使用，
+      不涉及任何商業用途。<br><br>
+
+      填寫時間約 5–8 分鐘，請依直覺作答。<br><br>
+
+      若有疑問，歡迎聯繫研究人員。<br><br>
+
+      國立成功大學 企業管理學研究所<br>
+      指導教授：黃瀞瑩 教授<br>
+      研究生：羅珮紓<br>
+      聯絡信箱：r46134070@gs.ncku.edu.tw
+    `,
+    type: 'consent'
+  },
+  {
     id: 'physical-boundary',
     progressText: '第 1 / 7 頁',
     pageIntroLayout: 'cinema',
