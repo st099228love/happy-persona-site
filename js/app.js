@@ -1,9 +1,21 @@
+const STORAGE_KEYS = {
+  answers: 'happyPersonaAnswers',
+  assignedScenario: 'happyPersonaAssignedScenario',
+  completed: 'happyPersonaCompleted'
+};
+
 const state = {
   currentPage: -1,
+  surveyPages: [window.SURVEY_SETS?.shared?.consent].filter(Boolean),
   answers: loadSavedAnswers(),
+  scenario: loadAssignedScenario(),
   result: null,
   isSubmitting: false
 };
+
+if (state.scenario) {
+  state.surveyPages = buildSurveyPages(state.scenario);
+}
 
 const screens = {
   cover: document.getElementById('cover-screen'),
@@ -26,14 +38,37 @@ const elements = {
 
 function loadSavedAnswers() {
   try {
-    return JSON.parse(localStorage.getItem('happyPersonaAnswers')) || {};
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.answers)) || {};
   } catch (e) {
     return {};
   }
 }
 
 function saveAnswers() {
-  localStorage.setItem('happyPersonaAnswers', JSON.stringify(state.answers));
+  localStorage.setItem(STORAGE_KEYS.answers, JSON.stringify(state.answers));
+}
+
+function loadAssignedScenario() {
+  const saved = localStorage.getItem(STORAGE_KEYS.assignedScenario);
+  return saved === 'movie' || saved === 'weekend' ? saved : null;
+}
+
+function saveAssignedScenario(scenario) {
+  state.scenario = scenario;
+  localStorage.setItem(STORAGE_KEYS.assignedScenario, scenario);
+}
+
+function isSurveyCompleted() {
+  return localStorage.getItem(STORAGE_KEYS.completed) === 'true';
+}
+
+function markSurveyCompleted() {
+  localStorage.setItem(STORAGE_KEYS.completed, 'true');
+}
+
+function clearSurveyRuntimeData() {
+  localStorage.removeItem(STORAGE_KEYS.answers);
+  localStorage.removeItem(STORAGE_KEYS.assignedScenario);
 }
 
 function getLastSpotStorageKey(typeKey) {
@@ -92,15 +127,31 @@ function showScreen(name) {
   screens[name].classList.add('active');
 }
 
+function getCurrentPages() {
+  return state.surveyPages || [];
+}
+
+function getCurrentPage() {
+  return getCurrentPages()[state.currentPage];
+}
+
 function startSurvey() {
+  if (isSurveyCompleted()) {
+    alert('你已經完成填答囉，謝謝你的幫忙！');
+    return;
+  }
+
   state.currentPage = 0;
+  state.surveyPages = state.scenario ? buildSurveyPages(state.scenario) : [window.SURVEY_SETS.shared.consent];
   showScreen('question');
   renderCurrentPage();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function renderCurrentPage() {
-  const page = SURVEY_PAGES[state.currentPage];
+  const page = getCurrentPage();
+  if (!page) return;
+
   renderPageHeader(page);
   renderQuestions(page);
   updateNavigation(page);
@@ -109,15 +160,11 @@ function renderCurrentPage() {
 
 function getGeometryByType(type) {
   if (type === 'mind') {
-    return `
-      <div class="context-icon mind"></div>
-    `;
+    return `<div class="context-icon mind"></div>`;
   }
 
   if (type === 'motive') {
-    return `
-      <div class="context-icon motive"></div>
-    `;
+    return `<div class="context-icon motive"></div>`;
   }
 
   return `
@@ -246,13 +293,14 @@ function updateNavigation(page) {
     label = '我已閱讀並同意，開始填答';
   }
 
+  elements.nextBtn.disabled = false;
   elements.nextBtn.textContent = label;
 }
 
 function updateProgress() {
-  const page = SURVEY_PAGES[state.currentPage];
+  const page = getCurrentPage();
 
-  if (page.type === 'consent') {
+  if (!page || page.type === 'consent') {
     elements.progressWrap.classList.add('hidden');
     return;
   }
@@ -260,7 +308,7 @@ function updateProgress() {
   elements.progressWrap.classList.remove('hidden');
 
   const current = state.currentPage;
-  const total = SURVEY_PAGES.length - 1;
+  const total = getCurrentPages().length - 1;
   const percent = Math.round((current / total) * 100);
 
   elements.progressPageText.textContent = `第 ${current} / ${total} 頁`;
@@ -269,9 +317,9 @@ function updateProgress() {
 }
 
 function validateCurrentPage() {
-  const page = SURVEY_PAGES[state.currentPage];
+  const page = getCurrentPage();
 
-  if (page.type === 'consent') {
+  if (!page || page.type === 'consent') {
     return true;
   }
 
@@ -298,7 +346,33 @@ function previousPage() {
 async function nextPage() {
   if (!validateCurrentPage()) return;
 
-  if (state.currentPage === SURVEY_PAGES.length - 1) {
+  const pages = getCurrentPages();
+  const page = getCurrentPage();
+
+  if (!page) return;
+
+  if (page.type === 'consent' && !state.scenario) {
+    elements.nextBtn.disabled = true;
+    elements.nextBtn.textContent = '分派情境中...';
+
+    try {
+      const assignedScenario = await fetchScenarioAssignment();
+      saveAssignedScenario(assignedScenario);
+      state.surveyPages = buildSurveyPages(assignedScenario);
+      state.currentPage = 1;
+      renderCurrentPage();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      console.error('情境分派失敗', error);
+      elements.nextBtn.disabled = false;
+      elements.nextBtn.textContent = '我已閱讀並同意，開始填答';
+      alert('目前無法分派題目情境，請稍後再試一次。');
+    }
+
+    return;
+  }
+
+  if (state.currentPage === pages.length - 1) {
     if (state.isSubmitting) return;
 
     state.isSubmitting = true;
@@ -309,6 +383,8 @@ async function nextPage() {
       state.result = calculateResult();
       saveAnswers();
       await submitSurvey();
+      markSurveyCompleted();
+      clearSurveyRuntimeData();
       renderResultPage();
       showScreen('result');
       elements.progressWrap.classList.add('hidden');
@@ -422,67 +498,113 @@ function renderResultPage() {
     </section>
 
     <div class="result-actions">
-      <button id="restart-btn" class="primary-button large" type="button">重新測驗</button>
+      <button id="go-home-btn" class="primary-button large" type="button">返回首頁</button>
       <button id="share-btn" class="ghost-button large" type="button">傳連結給好友</button>
     </div>
   `;
 
-  document.getElementById('restart-btn').addEventListener('click', restartSurvey);
+  document.getElementById('go-home-btn').addEventListener('click', goHomeAfterFinish);
   document.getElementById('share-btn').addEventListener('click', shareSurvey);
 }
 
-function restartSurvey() {
-  localStorage.removeItem('happyPersonaAnswers');
-  clearLastRecommendedSpots();
-  state.answers = {};
-  state.result = null;
-  state.currentPage = -1;
-  state.isSubmitting = false;
+function goHomeAfterFinish() {
   showScreen('cover');
-  elements.progressWrap.classList.add('hidden');
+  updateCoverState();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-async function shareSurvey() {
-  const text = '我剛測完這個人格測驗，你也來測測看 👀';
-  const url = window.location.href;
+function shareSurvey() {
+  const shareData = {
+    title: document.title,
+    text: '來測測看你的 HAPPY 型人格！',
+    url: window.location.href
+  };
 
   if (navigator.share) {
-    try {
-      await navigator.share({ title: APP_CONFIG.appTitle, text, url });
-    } catch (error) {}
-  } else {
-    await navigator.clipboard.writeText(url);
-    alert('連結已複製，可以直接傳給朋友了！');
+    navigator.share(shareData).catch(() => {});
+    return;
   }
+
+  navigator.clipboard.writeText(window.location.href)
+    .then(() => alert('連結已複製！快傳給朋友吧～'))
+    .catch(() => alert('目前無法自動複製，請手動複製網址分享。'));
+}
+
+async function fetchScenarioAssignment() {
+  if (!APP_CONFIG.backend.enabled || !APP_CONFIG.backend.googleScriptUrl) {
+    throw new Error('後台未啟用或網址未設定');
+  }
+
+  const url = `${APP_CONFIG.backend.googleScriptUrl}?action=assign`;
+  const response = await fetch(url, { method: 'GET' });
+
+  if (!response.ok) {
+    throw new Error(`分派請求失敗：${response.status}`);
+  }
+
+  const result = await response.json();
+
+  if (result.status !== 'success' || !result.scenario) {
+    throw new Error(result.message || '後台沒有回傳有效情境');
+  }
+
+  return result.scenario;
 }
 
 async function submitSurvey() {
-  if (!APP_CONFIG.backend.enabled || !APP_CONFIG.backend.googleScriptUrl) return;
+  if (!APP_CONFIG.backend.enabled || !APP_CONFIG.backend.googleScriptUrl) {
+    return;
+  }
+
+  if (!state.scenario) {
+    throw new Error('尚未取得 scenario');
+  }
 
   const payload = {
-    submittedAt: new Date().toISOString(),
-    resultType: state.result.typeData.name,
-    typeKey: state.result.typeKey,
-    recommendedSpotId: state.result.recommendation?.id || '',
-    recommendedSpotTitle: state.result.recommendation?.title || '',
-    labels: state.result.labels,
-    scores: state.result.scores,
+    scenario: state.scenario,
     answers: state.answers
   };
 
-  try {
-    await fetch(APP_CONFIG.backend.googleScriptUrl, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-  } catch (error) {
-    console.warn('後台送出失敗', error);
+  const response = await fetch(APP_CONFIG.backend.googleScriptUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) {
+    throw new Error(`提交失敗：${response.status}`);
+  }
+
+  const result = await response.json();
+
+  if (result.status !== 'success') {
+    throw new Error(result.message || '後台回傳失敗');
   }
 }
 
-elements.startBtn.addEventListener('click', startSurvey);
-elements.prevBtn.addEventListener('click', previousPage);
-elements.nextBtn.addEventListener('click', nextPage);
+function updateCoverState() {
+  if (isSurveyCompleted()) {
+    elements.startBtn.textContent = '已完成填答';
+    elements.startBtn.disabled = true;
+    elements.startBtn.style.opacity = '0.7';
+    elements.startBtn.style.cursor = 'not-allowed';
+  } else {
+    elements.startBtn.textContent = '開始測驗';
+    elements.startBtn.disabled = false;
+    elements.startBtn.style.opacity = '1';
+    elements.startBtn.style.cursor = 'pointer';
+  }
+}
+
+function initApp() {
+  updateCoverState();
+  showScreen('cover');
+
+  elements.startBtn.addEventListener('click', startSurvey);
+  elements.prevBtn.addEventListener('click', previousPage);
+  elements.nextBtn.addEventListener('click', nextPage);
+}
+
+initApp();
