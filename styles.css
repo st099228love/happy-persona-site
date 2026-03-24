@@ -1089,3 +1089,85 @@ body {
   left: 30%;
   border-radius: 10px;
 }
+.result-geometry {
+  width: 90px;
+  height: 90px;
+  position: relative;
+}
+.result-geometry.geo-type-1 {
+  background: #ffe9e4;
+  border-radius: 16px;
+}
+
+.result-geometry.geo-type-1::before {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 6px;
+  background: #ff6d4a;
+  top: 30%;
+  left: 20%;
+}
+
+.result-geometry.geo-type-1::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  height: 6px;
+  background: #ff6d4a;
+  top: 55%;
+  left: 20%;
+}
+.result-geometry.geo-type-2 {
+  background: radial-gradient(circle, #ffd45c, #ff8a5c);
+  border-radius: 50%;
+}
+
+.result-geometry.geo-type-2::after {
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 70%;
+  border: 3px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  top: 15%;
+  left: 15%;
+}
+.result-geometry.geo-type-3 {
+  position: relative;
+}
+
+.result-geometry.geo-type-3::before {
+  content: '';
+  position: absolute;
+  width: 35%;
+  height: 100%;
+  background: #ff6d4a;
+  left: 0;
+  border-radius: 10px;
+}
+
+.result-geometry.geo-type-3::after {
+  content: '';
+  position: absolute;
+  width: 35%;
+  height: 100%;
+  background: #ffd9c9;
+  right: 0;
+  border-radius: 10px;
+}
+.result-geometry.geo-type-4 {
+  background: #ffe9e4;
+  border-radius: 50%;
+}
+
+.result-geometry.geo-type-4::before {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  background: #ff6d4a;
+  border-radius: 50%;
+  top: 25%;
+  left: 25%;
+}
