@@ -288,13 +288,28 @@ async function nextPage() {
   if (!validateCurrentPage()) return;
 
   if (state.currentPage === SURVEY_PAGES.length - 1) {
-    state.result = calculateResult();
-    saveAnswers();
-    await submitSurvey();
-    renderResultPage();
-    showScreen('result');
-    elements.progressWrap.classList.add('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (state.isSubmitting) return;
+
+    state.isSubmitting = true;
+    elements.nextBtn.disabled = true;
+    elements.nextBtn.textContent = '送出中...';
+
+    try {
+      state.result = calculateResult();
+      saveAnswers();
+      await submitSurvey();
+      renderResultPage();
+      showScreen('result');
+      elements.progressWrap.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      console.error('送出失敗', error);
+      state.isSubmitting = false;
+      elements.nextBtn.disabled = false;
+      elements.nextBtn.textContent = '查看測驗結果';
+      alert('送出時出了點問題，請再試一次。');
+    }
+
     return;
   }
 
