@@ -1037,29 +1037,55 @@ body {
   height: 80px;
 }
 /* === mind 幾何（流動感）=== */
-.mind-wave {
-  width: 130%;
-  height: 35%;
-  background: linear-gradient(90deg, #ffd45c, #ff6d4a);
-  border-radius: 60% 40% 60% 40%;
-  bottom: 15%;
-  left: -15%;
+.context-icon.mind {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  position: relative;
+  background: linear-gradient(135deg, #ffd45c, #ff6d4a);
+  overflow: hidden;
 }
 
-.geo-ring {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #ffb347;
+/* 裝飾波形 */
+.context-icon.mind::before {
+  content: '';
+  position: absolute;
+  width: 140%;
+  height: 40%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 60% 40% 60% 40%;
+  bottom: 10%;
+  left: -20%;
+}
+
+/* 圓環 */
+.context-icon.mind::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255,255,255,0.7);
   border-radius: 50%;
   top: 10%;
   left: 10%;
 }
 /* === motive 幾何（穩定方塊）=== */
-.motive-box {
-  width: 50%;
-  height: 50%;
+.context-icon.motive {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  background: #ffe9e4;
+  border-radius: 16px;
+}
+
+/* 中間方塊 */
+.context-icon.motive::before {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 40%;
   background: #ff6d4a;
-  top: 25%;
-  left: 25%;
-  border-radius: 12px;
+  top: 30%;
+  left: 30%;
+  border-radius: 10px;
 }

@@ -143,6 +143,31 @@ function getGeometry(type) {
     </div>
   `;
 }
+function getGeometryByType(type) {
+  if (type === 'mind') {
+    return `
+      <div class="context-icon mind"></div>
+    `;
+  }
+
+  if (type === 'motive') {
+    return `
+      <div class="context-icon motive"></div>
+    `;
+  }
+
+  return `
+    <div class="cover-geometry small">
+      <div class="geo-layer geo-bg"></div>
+      <div class="geo-layer geo-wave"></div>
+      <div class="geo-layer geo-card"></div>
+      <div class="geo-layer geo-face"></div>
+      <div class="geo-layer geo-dot dot-a"></div>
+      <div class="geo-layer geo-dot dot-b"></div>
+    </div>
+  `;
+}
+
 
 function renderPageHeader(page) {
   const html = [];
@@ -151,14 +176,7 @@ function renderPageHeader(page) {
     html.push(`
       <div class="context-card-simple">
         <div class="context-icon-wrap">
-        <div class="cover-geometry small">
-          <div class="geo-layer geo-bg"></div>
-          <div class="geo-layer geo-wave"></div>
-          <div class="geo-layer geo-card"></div>
-          <div class="geo-layer geo-face"></div>
-          <div class="geo-layer geo-dot dot-a"></div>
-          <div class="geo-layer geo-dot dot-b"></div>
-        </div>
+        ${getGeometryByType(page.iconType)}
       </div>
         <div class="context-content">
           ${page.sectionLabel ? `<div class="context-badge">${page.sectionLabel}</div>` : ''}

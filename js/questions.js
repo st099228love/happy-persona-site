@@ -45,7 +45,7 @@ window.SURVEY_PAGES = [
     pageIntroLayout: 'cinema',
     contextText: '接下來想了解你在電影院中，是否有覺得是自己的空間',
     introText: '請照直覺回答就行',
-    iconType: 'cinema',
+    iconType: 'mind',
     questions: [
       { id: 'th1', type: 'likert', text: '我覺得自己座位周圍有足夠且被保障的個人空間。', dimension: 'territoriality' },
       { id: 'th2', type: 'likert', text: '我覺得自己擁有足夠的個人空間。', dimension: 'territoriality' },
@@ -62,7 +62,7 @@ window.SURVEY_PAGES = [
     pageIntroLayout: 'cinema',
     contextText: '接下來想了解你對「獨自看電影」的行動意願',
     introText: '你已經完成一大半了，謝謝你的耐心填寫！',
-    iconType: 'cinema',
+    iconType: 'mind',
     questions: [
       { id: 'bi1', type: 'likert', text: '我認為獨自看電影是可以接受的娛樂方式。', dimension: 'behavioralIntention' },
       { id: 'bi2', type: 'likert', text: '如果有機會，我願意獨自去看電影。', dimension: 'behavioralIntention' },
@@ -76,7 +76,7 @@ window.SURVEY_PAGES = [
     pageIntroLayout: 'cinema',
     contextText: '接下來想了解你選擇一個人看電影的原因',
     introText: '非常感謝你的協助...快要結束了!!',
-    iconType: 'cinema',
+    iconType: 'motive',
     questions: [
       { id: 'm1', type: 'likert', text: '有時候和別人一起看電影反而我不覺得比較輕鬆。', dimension: 'utilitarian' },
       { id: 'm2', type: 'likert', text: '當我一個人看電影時，我可以自由決定何時去看、看哪一部。', dimension: 'utilitarian' },
@@ -96,7 +96,7 @@ window.SURVEY_PAGES = [
     pageIntroLayout: 'cinema',
     contextText: '接下來想了解你的個性與待人處事的方式',
     introText: '這頁題目比較多，請不要打我😭',
-    iconType: 'cinema',
+    iconType: 'motive',
     questions: [
       { id: 'sc1', type: 'likert', text: '保持活躍的想像力對我來說很重要。', dimension: 'independent' },
       { id: 'sc2', type: 'likert', text: '當我因表現優異而被特別表揚時，我感到很自然。', dimension: 'independent' },
