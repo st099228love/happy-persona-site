@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你對一個人看電影的感受是什麼？</title>
+  <meta name="description" content="透過問卷理解你對一個人看電影的真實感受" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <section id="cover-screen" class="screen active">
+      <div class="cover-card">
+        <div class="cover-dot dot-1"></div>
+        <div class="cover-dot dot-2"></div>
+        <div class="cover-dot dot-3"></div>
+        <div class="cover-star star-1">✦</div>
+        <div class="cover-star star-2">✦</div>
+
+        <div class="cover-badge-row">
+          <span class="mini-badge">SOLO MOVIE</span>
+          <span class="mini-badge secondary">FEELING TEST</span>
+        </div>
+
+        <h1 class="cover-title">你是哪種<br>HAPPY型人格？</h1>
+
+        <div class="cover-visual-wrap">
+          <div class="cover-blob cover-blob-a"></div>
+          <div class="cover-blob cover-blob-b"></div>
+          <div class="cover-blob cover-blob-c"></div>
+          <div class="cover-geometry cover-geometry-main">
+            <div class="geo-layer geo-bg"></div>
+            <div class="geo-layer geo-wave"></div>
+            <div class="geo-layer geo-card"></div>
+            <div class="geo-layer geo-face"></div>
+            <div class="geo-layer geo-dot dot-a"></div>
+            <div class="geo-layer geo-dot dot-b"></div>
+            <div class="geo-layer geo-ring"></div>
+            <div class="geo-layer geo-star"></div>
+          </div>
+        </div>
+
+        <p class="cover-subtitle">約 5–8 分鐘，手機填答最佳</p>
+        <button id="start-btn" class="sticker-button">開始測驗</button>
+        <p class="cover-note">此問卷為匿名填答，僅供羅珮紓作為研究論文使用</p>
+      </div>
+    </section>
+
+    <section id="question-screen" class="screen">
+      <div class="question-page-wrap">
+
+        <div id="page-header" class="page-header"></div>
+        <div id="question-list" class="question-list"></div>
+
+        <div class="page-actions">
+          <button id="prev-btn" class="ghost-button" type="button">上一頁</button>
+          <button id="next-btn" class="primary-button" type="button">下一頁</button>
+        </div>
+      </div>
+
+      <div id="progress-bar-wrap" class="progress-bar-wrap hidden">
+        <div class="progress-label-row">
+          <span id="progress-page-text">第 1 / 7 頁</span>
+          <span id="progress-percent-text">14%</span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="result-screen" class="screen">
+      <div id="result-card" class="result-card"></div>
+    </section>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/results.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
