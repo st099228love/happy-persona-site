@@ -176,7 +176,7 @@ window.SURVEY_SETS = {
         progressText: '第 1 / 7 頁',
         pageIntroLayout: 'cinema',
         contextText: '想像今天你一個人參與一場城市週末活動，可能有表演、市集、攤位與人潮。',
-        introText: '請依照你的感受評分　1 非常不同意｜2 不同意｜3 普通｜4 同意｜5 非常同意',
+        introText: '例如：漁光島市集、駁二周末市集、成大草地音樂會、安平卡比胖拉展覽、大稻埕煙火<br>請依照你的感受評分　1 非常不同意｜2 不同意｜3 普通｜4 同意｜5 非常同意',
         iconType: 'cinema',
         questions: [
           { id: 'pb1', type: 'likert', text: '我希望我與周圍其他人之間保持著足夠的距離。', dimension: 'physicalBoundary' },
