@@ -1,7 +1,8 @@
 const state = {
   currentPage: -1,
   answers: loadSavedAnswers(),
-  result: null
+  result: null,
+  isSubmitting: false
 };
 
 const screens = {
