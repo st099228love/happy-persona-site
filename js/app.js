@@ -567,17 +567,22 @@ async function submitSurvey() {
 
   const response = await fetch(APP_CONFIG.backend.googleScriptUrl, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
     body: JSON.stringify(payload)
   });
+
+  const text = await response.text();
+  console.log('submit raw response:', text);
+
+  let result;
+  try {
+    result = JSON.parse(text);
+  } catch (error) {
+    throw new Error('後台回傳不是 JSON：' + text);
+  }
 
   if (!response.ok) {
     throw new Error(`提交失敗：${response.status}`);
   }
-
-  const result = await response.json();
 
   if (result.status !== 'success') {
     throw new Error(result.message || '後台回傳失敗');
