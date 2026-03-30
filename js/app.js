@@ -390,7 +390,7 @@ async function nextPage() {
       console.error('情境分派失敗', error);
       elements.nextBtn.disabled = false;
       elements.nextBtn.textContent = '我已閱讀並同意，開始填答';
-      alert('目前無法分派題目情境，請稍後再試一次。');
+       alert('情境分派失敗：' + error.message);
     }
 
     return;
