@@ -182,6 +182,30 @@ function getGeometryByType(type) {
 function renderPageHeader(page) {
   const html = [];
 
+  if (page.type === 'scenarioIntro') {
+    html.push(`
+      <div class="scenario-intro-card">
+        <div class="scenario-intro-image-wrap">
+          <img
+            src="${page.scenarioImage}"
+            alt="${page.scenarioAlt || page.scenarioTitle || '情境圖片'}"
+            class="scenario-intro-image"
+          />
+        </div>
+
+        <div class="scenario-intro-content">
+          <h2 class="scenario-intro-title">${page.scenarioTitle || ''}</h2>
+          ${(page.scenarioBody || []).map(text => `
+            <p class="scenario-intro-text">${text}</p>
+          `).join('')}
+        </div>
+      </div>
+    `);
+
+    elements.pageHeader.innerHTML = html.join('');
+    return;
+  }
+
   if (page.pageIntroLayout === 'cinema') {
     html.push(`
       <div class="context-card-simple">
@@ -211,7 +235,7 @@ function renderPageHeader(page) {
 }
 
 function renderQuestions(page) {
-  if (page.type === 'consent') {
+  if (page.type === 'consent' || page.type === 'scenarioIntro') {
     elements.questionList.innerHTML = '';
     return;
   }
@@ -319,7 +343,7 @@ function updateProgress() {
 function validateCurrentPage() {
   const page = getCurrentPage();
 
-  if (!page || page.type === 'consent') {
+  if (!page || page.type === 'consent' || page.type === 'scenarioIntro') {
     return true;
   }
 
@@ -406,22 +430,30 @@ async function nextPage() {
 }
 
 function average(ids) {
-  const values = ids.map(id => Number(state.answers[id])).filter(v => !Number.isNaN(v));
+  const values = ids
+    .map(id => Number(state.answers[id]))
+    .filter(v => !Number.isNaN(v));
+
   if (!values.length) return 0;
+
   const sum = values.reduce((total, current) => total + current, 0);
   return Number((sum / values.length).toFixed(2));
 }
 
 function calculateResult() {
-  const physicalScore = average(['pb1', 'pb2', 'pb3', 'pb4', 'pb5', 'pb6', 'pb7', 'pb8', 'pb9', 'pb10']);
-  const independentScore = average(['sc1', 'sc2', 'sc3', 'sc4', 'sc5', 'sc6']);
-  const interdependentScore = average(['sc7', 'sc8', 'sc9', 'sc10', 'sc11', 'sc12']);
-  const utilitarianScore = average(['m1', 'm2', 'm3', 'm4']);
-  const selfNurturingScore = average(['m5', 'm6', 'm7', 'm8']);
-  const territorialityScore = average(['th1', 'th2', 'th3', 'th4']);
-  const hedonicScore = average(['th5', 'th6', 'th7']);
-  const soloPsychologyScore = average(['pc1', 'pc2', 'pc3', 'pc4', 'pc5', 'pc6', 'pc7', 'pc8', 'pc9']);
-  const behavioralIntentionScore = average(['bi1', 'bi2', 'bi3', 'bi4']);
+  const physicalScore = average(['PHB_D_1', 'PHB_D_3', 'PHB_E_1', 'PHB_E_2', 'PHB_E_3']);
+  const independentScore = average(['IND1', 'IND2', 'IND3', 'IND4', 'IND5', 'IND6']);
+  const interdependentScore = average(['INT1', 'INT2', 'INT3', 'INT4', 'INT5', 'INT6']);
+  const utilitarianScore = average(['UT1', 'UT2', 'UT3', 'UT4']);
+  const selfNurturingScore = average(['EG1', 'EG2', 'EG3', 'EG4']);
+  const territorialityScore = average(['PT1', 'PT2', 'PT3', 'PT4']);
+  const hedonicScore = average(['PE1', 'PE2', 'PE3']);
+  const soloPsychologyScore = average([
+    'PSB_D_1', 'PSB_D_2', 'PSB_D_3',
+    'PSB_I_1', 'PSB_I_2', 'PSB_I_3',
+    'PSB_U_1', 'PSB_U_2', 'PSB_U_3'
+  ]);
+  const behavioralIntentionScore = average(['SDI1', 'SDI2', 'SDI3', 'SDI4']);
 
   const physical = physicalScore >= APP_CONFIG.thresholds.physicalHighCutoff ? 'high' : 'low';
   const self = independentScore >= interdependentScore ? 'independent' : 'interdependent';

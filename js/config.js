@@ -5,7 +5,7 @@ window.APP_CONFIG = {
   likertLabels: ['非常不同意', '不同意', '普通', '同意', '非常同意'],
   backend: {
     // 把這裡換成你部署好的 Google Apps Script Web App URL
-    googleScriptUrl: 'https://script.google.com/macros/s/AKfycbzJDdN7_powNrCc87eor9b4JXrAz-L97zeshpDcWLGbRVPXE7wn5PXVrzXj6Br3UbTXKg/exec',
+    googleScriptUrl: 'https://script.google.com/macros/s/AKfycbxGHyanpk8dquV5VrhxM-8SeHkVb5rdxqeF3rqZ3A-y2xLb1kK2V32uDnZVFiUx-KciiA/exec',
     enabled: true
   },
   thresholds: {

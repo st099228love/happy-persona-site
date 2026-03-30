@@ -16,7 +16,7 @@ window.SURVEY_SETS = {
         本問卷採匿名方式蒐集資料，僅供學術研究使用，
         不涉及任何商業用途。<br><br>
 
-        填寫時間約 5–8 分鐘，請依直覺作答。<br><br>
+        填寫時間約5-7分鐘，請依直覺作答。<br><br>
 
         若有疑問，歡迎聯繫研究人員。<br><br>
 
@@ -30,24 +30,25 @@ window.SURVEY_SETS = {
 
     selfConstrual: {
       id: 'self-construal',
-      progressText: '第 6 / 7 頁',
+      progressText: '第 7 / 8 頁',
       pageIntroLayout: 'cinema',
       contextText: '接下來想了解你的個性與待人處事的方式',
       introText: '這頁題目比較多，請不要打我😭',
       iconType: 'motive',
       questions: [
-        { id: 'sc1', type: 'likert', text: '保持活躍的想像力對我來說很重要。', dimension: 'independent' },
-        { id: 'sc2', type: 'likert', text: '當我因表現優異而被特別表揚時，我感到很自然。', dimension: 'independent' },
-        { id: 'sc3', type: 'likert', text: '我願意在公開場合表達自己的意見。', dimension: 'independent' },
-        { id: 'sc4', type: 'likert', text: '擁有獨特的個性對我來說很重要。', dimension: 'independent' },
-        { id: 'sc5', type: 'likert', text: '我很開心自己與他人不同，並擁有獨特性。', dimension: 'independent' },
-        { id: 'sc6', type: 'likert', text: '當我與陌生人互動時，我傾向於直接坦率。', dimension: 'independent' },
-        { id: 'sc7', type: 'likert', text: '我尊重與我互動的權威人物。', dimension: 'interdependent' },
-        { id: 'sc8', type: 'likert', text: '我認為維持團體內的和諧是重要的。', dimension: 'interdependent' },
-        { id: 'sc9', type: 'likert', text: '我尊重那些非常謙遜的人。', dimension: 'interdependent' },
-        { id: 'sc10', type: 'likert', text: '尊重集體決策對我來說很重要。', dimension: 'interdependent' },
-        { id: 'sc11', type: 'likert', text: '我願意為我所屬的團體犧牲自己的利益。', dimension: 'interdependent' },
-        { id: 'sc12', type: 'likert', text: '維持與他人的和諧關係對我來說非常重要。', dimension: 'interdependent' }
+        { id: 'IND1', type: 'likert', text: '我覺得保持活躍的想像力很重要。', dimension: 'independent' },
+        { id: 'IND2', type: 'likert', text: '當我被單獨表揚時，我感到很自然。', dimension: 'independent' },
+        { id: 'IND3', type: 'likert', text: '我願意在公眾場合表達自己的意見。', dimension: 'independent' },
+        { id: 'IND4', type: 'likert', text: '我覺得擁有獨特的個性很重要。', dimension: 'independent' },
+        { id: 'IND5', type: 'likert', text: '我很開心自己與他人不同。', dimension: 'independent' },
+        { id: 'IND6', type: 'likert', text: '當我認識新的人時，我傾向表現得直接坦率。', dimension: 'independent' },
+
+        { id: 'INT1', type: 'likert', text: '我會尊重與我有互動的權威人物。（例如：老師、主管或長輩）', dimension: 'interdependent' },
+        { id: 'INT2', type: 'likert', text: '我認為團體內的和諧是重要的。', dimension: 'interdependent' },
+        { id: 'INT3', type: 'likert', text: '我尊重謙遜的人。', dimension: 'interdependent' },
+        { id: 'INT4', type: 'likert', text: '我覺得尊重集體決策很重要。', dimension: 'interdependent' },
+        { id: 'INT5', type: 'likert', text: '我願意為我所屬的團體犧牲自己的利益。', dimension: 'interdependent' },
+        { id: 'INT6', type: 'likert', text: '我覺得維持與他人的和諧關係非常重要。', dimension: 'interdependent' }
       ],
       dividerAfter: 6,
       dividerText: '以下是關於你與他人互動的看法'
@@ -55,7 +56,7 @@ window.SURVEY_SETS = {
 
     demographics: {
       id: 'demographics',
-      progressText: '第 7 / 7 頁',
+      progressText: '第 8 / 8 頁',
       pageIntroLayout: 'cinema',
       contextText: '最後請讓我們更了解你一點點就好',
       introText: '完成後即可查看結果',
@@ -77,94 +78,101 @@ window.SURVEY_SETS = {
   movie: {
     scenarioPages: [
       {
+        id: 'scenario-intro',
+        type: 'scenarioIntro',
+        progressText: '第 1 / 8 頁',
+        submitLabel: '開始作答',
+        scenarioImage: 'images/movie-scenario.png',
+        scenarioAlt: '電影院情境示意圖',
+        scenarioTitle: '請想像以下情境：',
+        scenarioBody: [
+          '今天你一個人來到電影院，準備看一場電影。',
+          '你已進入影廳並來到自己的座位附近，周圍也有其他觀眾正在入座或等待電影開始。',
+          '請先不要考慮電影內容，而是根據自己在這樣的觀影環境中可能的感受與想法，回答以下問題。'
+        ]
+      },
+      {
         id: 'physical-boundary',
-        progressText: '第 1 / 7 頁',
+        progressText: '第 2 / 8 頁',
         pageIntroLayout: 'cinema',
-        contextText: '想像今天晚上，你一個人走進電影院，準備看一場電影。',
-        introText: '請依照你的感受評分　1 非常不同意｜2 不同意｜3 普通｜4 同意｜5 非常同意',
+        contextText: '今天你一個人來到電影院，準備看一場電影。',
+        introText: '請你試想在這樣的環境中，你的想法與感受',
         iconType: 'cinema',
         questions: [
-          { id: 'pb1', type: 'likert', text: '我希望我的座位與左右觀眾之間保有足夠的距離。', dimension: 'physicalBoundary' },
-          { id: 'pb2', type: 'likert', text: '我在意我與前後排觀眾之間的座位間距，是否足夠。', dimension: 'physicalBoundary' },
-          { id: 'pb3', type: 'likert', text: '我希望座位之間的走道與排距讓我可以自在進出。', dimension: 'physicalBoundary' },
-          { id: 'pb4', type: 'likert', text: '我希望座位周邊有可放置個人物品的位置。（例如：包包、飲料或外套）', dimension: 'physicalBoundary' },
-          { id: 'pb5', type: 'likert', text: '我希望不需要與旁邊觀眾共用空間或互相協調（例如：共用一邊扶手或置物空間）。', dimension: 'physicalBoundary' },
-          { id: 'pb6', type: 'likert', text: '我希望座位周邊的空間是屬於我個人使用的（例如：扶手、置物空間等）。', dimension: 'physicalBoundary' },
-          { id: 'pb7', type: 'likert', text: '電影院的空間讓我感到舒適。', dimension: 'physicalBoundary' },
-          { id: 'pb8', type: 'likert', text: '電影院內的色彩搭配讓人感覺和諧。（例如：牆面、地毯、座椅）', dimension: 'physicalBoundary' },
-          { id: 'pb9', type: 'likert', text: '電影院內的裝潢與設計元素看起來是和諧的。（例如：主題牆面、整體風格設計）', dimension: 'physicalBoundary' },
-          { id: 'pb10', type: 'likert', text: '電影院的空間大小適合獨自看電影。', dimension: 'physicalBoundary' }
+          { id: 'PHB_D_1', type: 'likert', text: '我在意自己與其他觀眾之間保有適當的距離。', dimension: 'physicalBoundary' },
+          { id: 'PHB_D_3', type: 'likert', text: '我在意座位之間的走道與排距可不可以自在進出。', dimension: 'physicalBoundary' },
+          { id: 'PHB_E_1', type: 'likert', text: '我在意座位周邊有足夠空間供我放個人物品。（例如：包包、飲料或外套）', dimension: 'physicalBoundary' },
+          { id: 'PHB_E_2', type: 'likert', text: '我不希望與旁邊觀眾共用空間（例如：一邊的扶手或放包包）。', dimension: 'physicalBoundary' },
+          { id: 'PHB_E_3', type: 'likert', text: '我希望座位周邊的空間是屬於我個人使用的。（例如：一邊的扶手或放包包）', dimension: 'physicalBoundary' }
         ]
       },
       {
         id: 'psychological-acceptance',
-        progressText: '第 2 / 7 頁',
+        progressText: '第 3 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你對一個人看電影的感受',
         introText: '請照直覺回答就行',
         iconType: 'cinema',
         questions: [
-          { id: 'pc1', type: 'likert', text: '我認為獨自看電影是適合一個人娛樂的方式。', dimension: 'soloPsychology' },
-          { id: 'pc2', type: 'likert', text: '就一個人娛樂而言，我很難想到有比獨自看電影更好的活動。', dimension: 'soloPsychology' },
-          { id: 'pc3', type: 'likert', text: '當我想一個人娛樂時，看電影通常會是我的選擇。', dimension: 'soloPsychology' },
-          { id: 'pc4', type: 'likert', text: '我對獨自看電影這件事情感到熟悉。', dimension: 'soloPsychology' },
-          { id: 'pc5', type: 'likert', text: '獨自看電影會讓我感到自在或有一種歸屬感。', dimension: 'soloPsychology' },
-          { id: 'pc6', type: 'likert', text: '獨自看電影已經成為我生活的一部分。', dimension: 'soloPsychology' },
-          { id: 'pc7', type: 'likert', text: '我不會特別在意其他觀眾是否注意到我。', dimension: 'soloPsychology' },
-          { id: 'pc8', type: 'likert', text: '當其他觀眾注意到我一個人看電影時，我仍然感到自在。', dimension: 'soloPsychology' },
-          { id: 'pc9', type: 'likert', text: '我不會覺得其他觀眾會因為我是一個人而特別看待我。', dimension: 'soloPsychology' }
+          { id: 'PSB_D_1', type: 'likert', text: '我認為看電影是適合一個人娛樂的方式。', dimension: 'soloPsychology' },
+          { id: 'PSB_D_2', type: 'likert', text: '就一個人娛樂而言，我很難想到有比獨自看電影更好的活動。', dimension: 'soloPsychology' },
+          { id: 'PSB_D_3', type: 'likert', text: '當我想一個人娛樂時，看電影通常會是我的選擇。', dimension: 'soloPsychology' },
+          { id: 'PSB_I_1', type: 'likert', text: '我對獨自看電影感到熟悉。', dimension: 'soloPsychology' },
+          { id: 'PSB_I_2', type: 'likert', text: '獨自看電影讓我感到歸屬感。', dimension: 'soloPsychology' },
+          { id: 'PSB_I_3', type: 'likert', text: '獨自看電影是我生活的一部分。', dimension: 'soloPsychology' },
+          { id: 'PSB_U_1', type: 'likert', text: '我不會因為其他觀眾的目光而感到不舒服。', dimension: 'soloPsychology' },
+          { id: 'PSB_U_2', type: 'likert', text: '當其他人注意到我一個人看電影時，我感到自在，不會尷尬。', dimension: 'soloPsychology' },
+          { id: 'PSB_U_3', type: 'likert', text: '我不會覺得其他觀眾會因為我是一個人看電影，而用帶有同情或特別意味的眼光看我。', dimension: 'soloPsychology' }
         ]
       },
       {
         id: 'territoriality-hedonics',
-        progressText: '第 3 / 7 頁',
+        progressText: '第 4 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你在電影院中，是否有覺得是自己的空間',
         introText: '請照直覺回答就行',
         iconType: 'mind',
         questions: [
-          { id: 'th1', type: 'likert', text: '我覺得自己座位周圍有足夠且被保障的個人空間。', dimension: 'territoriality' },
-          { id: 'th2', type: 'likert', text: '我覺得自己擁有足夠的個人空間。', dimension: 'territoriality' },
-          { id: 'th3', type: 'likert', text: '我會覺得自己的座位是屬於我的個人空間。', dimension: 'territoriality' },
-          { id: 'th4', type: 'likert', text: '當座位與設施（例如：放飲料、置物空間）是為我安排並由我使用時，我會感到安心與自在。', dimension: 'territoriality' },
-          { id: 'th5', type: 'likert', text: '對我來說，獨自看電影是愉快的。', dimension: 'hedonic' },
-          { id: 'th6', type: 'likert', text: '對我來說，獨自看電影讓我感到平靜。', dimension: 'hedonic' },
-          { id: 'th7', type: 'likert', text: '對我來說，我獨自看電影時感到輕鬆自在。', dimension: 'hedonic' }
+          { id: 'PT1', type: 'likert', text: '我覺得自己座位周圍有足夠且不容易被打擾的個人空間。', dimension: 'territoriality' },
+          { id: 'PT2', type: 'likert', text: '我覺得自己擁有足夠的個人空間。', dimension: 'territoriality' },
+          { id: 'PT3', type: 'likert', text: '我覺得自己的座位是屬於我的個人空間。', dimension: 'territoriality' },
+          { id: 'PT4', type: 'likert', text: '當座位及周邊使用空間是明確供我個人使用時，會讓我感到安心。（例如：放飲料、包包、不用共用扶手）', dimension: 'territoriality' },
+          { id: 'PE1', type: 'likert', text: '獨自看電影是愉快的。', dimension: 'hedonic' },
+          { id: 'PE2', type: 'likert', text: '獨自看電影讓我感到平靜。', dimension: 'hedonic' },
+          { id: 'PE3', type: 'likert', text: '獨自看電影讓我感到輕鬆。', dimension: 'hedonic' }
         ]
       },
       {
         id: 'behavior-intention',
-        progressText: '第 4 / 7 頁',
+        progressText: '第 5 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你對「獨自看電影」的行動意願',
         introText: '你已經完成一大半了，謝謝你的耐心填寫！',
         iconType: 'mind',
         questions: [
-          { id: 'bi1', type: 'likert', text: '我認為獨自看電影是可以接受的娛樂方式。', dimension: 'behavioralIntention' },
-          { id: 'bi2', type: 'likert', text: '如果有機會，我願意獨自去看電影。', dimension: 'behavioralIntention' },
-          { id: 'bi3', type: 'likert', text: '未來我有可能會選擇獨自去看電影。', dimension: 'behavioralIntention' },
-          { id: 'bi4', type: 'likert', text: '如果有人想一個人看電影，我會推薦他這樣做。', dimension: 'behavioralIntention' }
+          { id: 'SDI1', type: 'likert', text: '我認為獨自看電影是可以接受的娛樂方式。', dimension: 'behavioralIntention' },
+          { id: 'SDI2', type: 'likert', text: '如果有機會，我願意獨自去看電影。', dimension: 'behavioralIntention' },
+          { id: 'SDI3', type: 'likert', text: '我想要獨自看電影。', dimension: 'behavioralIntention' },
+          { id: 'SDI4', type: 'likert', text: '如果有人想一個人看電影，我會推薦他這樣做。', dimension: 'behavioralIntention' }
         ]
       },
       {
         id: 'motivation',
-        progressText: '第 5 / 7 頁',
+        progressText: '第 6 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你選擇一個人看電影的原因',
         introText: '非常感謝你的協助...快要結束了!!',
         iconType: 'motive',
         questions: [
-          { id: 'm1', type: 'likert', text: '有時候和別人一起看電影反而我不覺得比較輕鬆。', dimension: 'utilitarian' },
-          { id: 'm2', type: 'likert', text: '當我一個人看電影時，我可以自由決定何時去看、看哪一部。', dimension: 'utilitarian' },
-          { id: 'm3', type: 'likert', text: '有時候我和朋友或家人想看的電影類型不太相同，因此我會選擇一個人看電影。', dimension: 'utilitarian' },
-          { id: 'm4', type: 'likert', text: '我不需要顧慮或配合他人的需求。（例如選片、時間）', dimension: 'utilitarian' },
-          { id: 'm5', type: 'likert', text: '獨自看電影會讓我感到快樂。', dimension: 'selfNurturing' },
-          { id: 'm6', type: 'likert', text: '當我一個人看電影時，我會更喜歡自己現在的樣子。', dimension: 'selfNurturing' },
-          { id: 'm7', type: 'likert', text: '獨自看電影會讓我感到自由。', dimension: 'selfNurturing' },
-          { id: 'm8', type: 'likert', text: '當我一個人看電影時，我不會太在意其他觀眾如何看待我。', dimension: 'selfNurturing' }
-        ],
-        dividerAfter: 4,
-        dividerText: '以下是關於你一個人看電影時的感受'
+          { id: 'UT1', type: 'likert', text: '獨自看電影讓我感到比較輕鬆。', dimension: 'utilitarian' },
+          { id: 'UT2', type: 'likert', text: '當我獨自看電影時，我可以自由決定何時去看、看哪一部。', dimension: 'utilitarian' },
+          { id: 'UT3', type: 'likert', text: '有時候我和朋友對電影的偏好不太相同，因此我會選擇一個人去看。（例如：我想看劇情片，但對方想看動作片；或我想慢慢選要看哪部，但對方很急。）', dimension: 'utilitarian' },
+          { id: 'UT4', type: 'likert', text: '獨自看電影時，我不需要顧慮他人的需求。（例如：選片、時間）', dimension: 'utilitarian' },
+          { id: 'EG1', type: 'likert', text: '獨自看電影讓我感到快樂。', dimension: 'selfNurturing' },
+          { id: 'EG2', type: 'likert', text: '我比較喜歡獨自看電影時的自己。', dimension: 'selfNurturing' },
+          { id: 'EG3', type: 'likert', text: '獨自看電影讓我感到自由。', dimension: 'selfNurturing' },
+          { id: 'EG4', type: 'likert', text: '獨自看電影讓我感到充實。', dimension: 'selfNurturing' }
+        ]
       }
     ]
   },
@@ -172,94 +180,101 @@ window.SURVEY_SETS = {
   weekend: {
     scenarioPages: [
       {
+        id: 'scenario-intro',
+        type: 'scenarioIntro',
+        progressText: '第 1 / 8 頁',
+        submitLabel: '開始作答',
+        scenarioImage: 'images/weekend-scenario.png',
+        scenarioAlt: '城市周末活動情境示意圖',
+        scenarioTitle: '請想像以下情境：',
+        scenarioBody: [
+          '今天是週末，你一個人去城市裡的戶外活動。',
+          '那裡有很多攤位、吃的東西、表演和可以逛逛拍照的地方，也有不少人在現場走動、停留、聊天或休息。你可以自己決定要去哪裡、停多久、要不要看表演、吃東西或繼續逛。',
+          '以下我們簡稱上述活動為<span class="scenario-keyword">城市周末活動</span>，請根據這樣的情境，回答以下問題。'
+        ]
+      },
+      {
         id: 'physical-boundary',
-        progressText: '第 1 / 7 頁',
+        progressText: '第 2 / 8 頁',
         pageIntroLayout: 'cinema',
-        contextText: '想像今天你一個人參與一場城市週末活動，可能有表演、市集、攤位與人潮。',
-        introText: '例如：漁光島市集、駁二周末市集、成大草地音樂會、安平卡比胖拉展覽、大稻埕煙火<br>請依照你的感受評分　1 非常不同意｜2 不同意｜3 普通｜4 同意｜5 非常同意',
+        contextText: '想像今天你一個人去了一場城市週末活動',
+        introText: '有很多攤位、吃的東西、表演和可以逛逛拍照的地方',
         iconType: 'cinema',
         questions: [
-          { id: 'pb1', type: 'likert', text: '我希望我與周圍其他人之間保持著足夠的距離。', dimension: 'physicalBoundary' },
-          { id: 'pb2', type: 'likert', text: '我希望我在觀看表演或停留於某個區域時能保有足夠的空間。', dimension: 'physicalBoundary' },
-          { id: 'pb3', type: 'likert', text: '我在意活動場地的走道與動線讓我可以自在地走動（例如：路線是否順暢、空間是否好走）。', dimension: 'physicalBoundary' },
-          { id: 'pb4', type: 'likert', text: '我希望活動場地有個人使用的空間或設施（例如：座位、休息區或可停留的角落）。', dimension: 'physicalBoundary' },
-          { id: 'pb5', type: 'likert', text: '我希望不需要與他人共用停留的或休息的空間。', dimension: 'physicalBoundary' },
-          { id: 'pb6', type: 'likert', text: '我希望活動場地的座位區或停留區有適合個人使用的（例如：可自行坐下、站立觀看或短暫休息的位置）。', dimension: 'physicalBoundary' },
-          { id: 'pb7', type: 'likert', text: '城市週末活動的整體空間讓我感到舒適。', dimension: 'physicalBoundary' },
-          { id: 'pb8', type: 'likert', text: '活動場地的色彩搭配讓人感覺和諧。（例如：攤位設計、燈光布置或周邊裝飾）', dimension: 'physicalBoundary' },
-          { id: 'pb9', type: 'likert', text: '活動場地的裝潢與設計元素看起來是和諧的。（例如：主題布置、攤位與休息區設計）', dimension: 'physicalBoundary' },
-          { id: 'pb10', type: 'likert', text: '活動場地的空間大小適合獨自參與城市週末活動。', dimension: 'physicalBoundary' }
+          { id: 'PHB_D_1', type: 'likert', text: '我在意自己與周圍其他人之間保有適當的距離。', dimension: 'physicalBoundary' },
+          { id: 'PHB_D_3', type: 'likert', text: '我在意活動場地的走道與動線可不可以自在移動。', dimension: 'physicalBoundary' },
+          { id: 'PHB_E_1', type: 'likert', text: '我在意活動現場有足夠空間供我個人使用（例如：休息區、看表演時）。', dimension: 'physicalBoundary' },
+          { id: 'PHB_E_2', type: 'likert', text: '我不希望與他人共用休息區或看表演的空間。', dimension: 'physicalBoundary' },
+          { id: 'PHB_E_3', type: 'likert', text: '我希望活動現場有空間可供我個人單獨使用或停留（例如：休息區、看表演時）。', dimension: 'physicalBoundary' }
         ]
       },
       {
         id: 'psychological-acceptance',
-        progressText: '第 2 / 7 頁',
+        progressText: '第 3 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你對一個人參與城市週末活動的感受',
         introText: '請照直覺回答就行',
         iconType: 'cinema',
         questions: [
-          { id: 'pc1', type: 'likert', text: '我認為獨自參與城市週末活動是一個適合一個人娛樂的方式。', dimension: 'soloPsychology' },
-          { id: 'pc2', type: 'likert', text: '就一個人娛樂而言，我很難想到有比獨自參與城市週末活動更好的活動。', dimension: 'soloPsychology' },
-          { id: 'pc3', type: 'likert', text: '當我想要一個人娛樂時，參加城市週末活動通常會是我的選擇。', dimension: 'soloPsychology' },
-          { id: 'pc4', type: 'likert', text: '我對獨自參與城市週末活動這件事情感到熟悉。', dimension: 'soloPsychology' },
-          { id: 'pc5', type: 'likert', text: '獨自參與城市週末活動會讓我感到自在或有一種歸屬感。', dimension: 'soloPsychology' },
-          { id: 'pc6', type: 'likert', text: '參加城市週末活動已經成為我生活的一部分。', dimension: 'soloPsychology' },
-          { id: 'pc7', type: 'likert', text: '我不會特別在意其他人是否注意到我。', dimension: 'soloPsychology' },
-          { id: 'pc8', type: 'likert', text: '當其他參與者注意到我一個人參與活動時，我仍然感到自在。', dimension: 'soloPsychology' },
-          { id: 'pc9', type: 'likert', text: '我不會覺得其他人會因為我是一個人而特別看待我。', dimension: 'soloPsychology' }
+          { id: 'PSB_D_1', type: 'likert', text: '我認為參與城市週末活動是適合一個人娛樂的方式。', dimension: 'soloPsychology' },
+          { id: 'PSB_D_2', type: 'likert', text: '就一個人娛樂而言，我很難想到有比獨自城市週末活動更好的活動。', dimension: 'soloPsychology' },
+          { id: 'PSB_D_3', type: 'likert', text: '當我想要一個人娛樂時，城市週末活動通常會是我的選擇。', dimension: 'soloPsychology' },
+          { id: 'PSB_I_1', type: 'likert', text: '我對獨自參與城市週末活動感到熟悉。', dimension: 'soloPsychology' },
+          { id: 'PSB_I_2', type: 'likert', text: '獨自參與城市週末活動讓我感到歸屬感。', dimension: 'soloPsychology' },
+          { id: 'PSB_I_3', type: 'likert', text: '獨自參加城市週末活動是我生活的一部分。', dimension: 'soloPsychology' },
+          { id: 'PSB_U_1', type: 'likert', text: '我不會因為其他人的目光而感到不舒服。', dimension: 'soloPsychology' },
+          { id: 'PSB_U_2', type: 'likert', text: '當其他人注意到我一個人參與活動時，我感到自在，不會尷尬。', dimension: 'soloPsychology' },
+          { id: 'PSB_U_3', type: 'likert', text: '我不會覺得其他人會因為我是一個人參與活動，而用帶有同情或特別意味的眼光看我。', dimension: 'soloPsychology' }
         ]
       },
       {
         id: 'territoriality-hedonics',
-        progressText: '第 3 / 7 頁',
+        progressText: '第 4 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你在活動現場中，是否有覺得是自己的空間',
         introText: '請照直覺回答就行',
         iconType: 'mind',
         questions: [
-          { id: 'th1', type: 'likert', text: '我覺得自己周圍有足夠且被保障的空間可以自在地停留或參與活動。', dimension: 'territoriality' },
-          { id: 'th2', type: 'likert', text: '我覺得自己擁有足夠的個人空間。', dimension: 'territoriality' },
-          { id: 'th3', type: 'likert', text: '我會覺得自己所在的位置是屬於我的個人活動空間。', dimension: 'territoriality' },
-          { id: 'th4', type: 'likert', text: '當我在活動現場找到一個適合停留的位置時，我會感到安心與自在。', dimension: 'territoriality' },
-          { id: 'th5', type: 'likert', text: '對我來說，獨自參與城市週末活動是愉快的。', dimension: 'hedonic' },
-          { id: 'th6', type: 'likert', text: '對我來說，獨自參與城市週末活動讓我感到平靜。', dimension: 'hedonic' },
-          { id: 'th7', type: 'likert', text: '對我來說，我獨自參與城市週末活動時感到輕鬆自在。', dimension: 'hedonic' }
+          { id: 'PT1', type: 'likert', text: '我覺得自己周圍有足夠且不容易被打擾的空間可以參與活動。', dimension: 'territoriality' },
+          { id: 'PT2', type: 'likert', text: '我覺得自己擁有足夠的個人空間。', dimension: 'territoriality' },
+          { id: 'PT3', type: 'likert', text: '我覺得自己所在的空間是屬於我的個人空間。', dimension: 'territoriality' },
+          { id: 'PT4', type: 'likert', text: '當活動現場有明確供我個人停留或使用的空間時，會讓我感到安心。（例如：休息區、看表演時的位置）', dimension: 'territoriality' },
+          { id: 'PE1', type: 'likert', text: '獨自參與城市週末活動是愉快的。', dimension: 'hedonic' },
+          { id: 'PE2', type: 'likert', text: '獨自參與城市週末活動讓我感到平靜。', dimension: 'hedonic' },
+          { id: 'PE3', type: 'likert', text: '獨自參與城市週末活動讓我感到輕鬆。', dimension: 'hedonic' }
         ]
       },
       {
         id: 'behavior-intention',
-        progressText: '第 4 / 7 頁',
+        progressText: '第 5 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你對「獨自參與城市週末活動」的行動意願',
         introText: '你已經完成一大半了，謝謝你的耐心填寫！',
         iconType: 'mind',
         questions: [
-          { id: 'bi1', type: 'likert', text: '我認為獨自參與城市週末活動是可以接受的娛樂方式。', dimension: 'behavioralIntention' },
-          { id: 'bi2', type: 'likert', text: '如果有機會，我願意獨自參與城市週末活動。', dimension: 'behavioralIntention' },
-          { id: 'bi3', type: 'likert', text: '未來我有可能會選擇獨自參與城市週末活動。', dimension: 'behavioralIntention' },
-          { id: 'bi4', type: 'likert', text: '如果有人想一個人參加城市週末活動，我會推薦他這樣做。', dimension: 'behavioralIntention' }
+          { id: 'SDI1', type: 'likert', text: '我認為獨自參與城市週末活動是可以接受的娛樂方式。', dimension: 'behavioralIntention' },
+          { id: 'SDI2', type: 'likert', text: '如果有機會，我願意獨自參與城市週末活動。', dimension: 'behavioralIntention' },
+          { id: 'SDI3', type: 'likert', text: '我想要獨自去城市周末活動。', dimension: 'behavioralIntention' },
+          { id: 'SDI4', type: 'likert', text: '如果有人想一個人參加城市週末活動，我會推薦他這樣做。', dimension: 'behavioralIntention' }
         ]
       },
       {
         id: 'motivation',
-        progressText: '第 5 / 7 頁',
+        progressText: '第 6 / 8 頁',
         pageIntroLayout: 'cinema',
         contextText: '接下來想了解你選擇一個人參與城市週末活動的原因',
         introText: '非常感謝你的協助...快要結束了!!',
         iconType: 'motive',
         questions: [
-          { id: 'm1', type: 'likert', text: '有時候和別人一起參與城市週末活動沒有覺得比較輕鬆。', dimension: 'utilitarian' },
-          { id: 'm2', type: 'likert', text: '當我一個人參與城市週末活動時，我可以自由決定何時前往、參與哪些活動以及停留多久。', dimension: 'utilitarian' },
-          { id: 'm3', type: 'likert', text: '有時候我和朋友或家人對於活動內容的偏好不太相同，因此我會選擇一個人參與。', dimension: 'utilitarian' },
-          { id: 'm4', type: 'likert', text: '我不需要顧慮或配合他人的需求。（例如行程安排、停留時間或活動選擇）', dimension: 'utilitarian' },
-          { id: 'm5', type: 'likert', text: '獨自參與城市週末活動會讓我感到快樂。', dimension: 'selfNurturing' },
-          { id: 'm6', type: 'likert', text: '當我一個人參與城市週末活動時，我會更喜歡自己現在的樣子。', dimension: 'selfNurturing' },
-          { id: 'm7', type: 'likert', text: '獨自參與城市週末活動會讓我感到自由。', dimension: 'selfNurturing' },
-          { id: 'm8', type: 'likert', text: '當我一個人參與城市週末活動時，我不會太在意其他人如何看待我。', dimension: 'selfNurturing' }
-        ],
-        dividerAfter: 4,
-        dividerText: '以下是關於你一個人參與城市週末活動時的感受'
+          { id: 'UT1', type: 'likert', text: '獨自去城市週末活動讓我感到比較輕鬆。', dimension: 'utilitarian' },
+          { id: 'UT2', type: 'likert', text: '當我獨自參與城市週末活動時，我可以自由決定什麼時候去、去多久、要參與哪些活動。', dimension: 'utilitarian' },
+          { id: 'UT3', type: 'likert', text: '有時候我和朋友對活動內容的偏好不太相同，因此我會選擇一個人參與。（例如：我想逛市集，但朋友比較想看表演；或我想慢慢逛攤位，但對方想走馬看花。）', dimension: 'utilitarian' },
+          { id: 'UT4', type: 'likert', text: '獨自去城市週末活動時，我不需要顧慮他人的需求。（例如：行程安排、慢慢看還是看很快）', dimension: 'utilitarian' },
+          { id: 'EG1', type: 'likert', text: '獨自參與城市週末活動讓我感到快樂。', dimension: 'selfNurturing' },
+          { id: 'EG2', type: 'likert', text: '我比較喜歡獨自參與城市周末活動時的自己。', dimension: 'selfNurturing' },
+          { id: 'EG3', type: 'likert', text: '獨自參與城市週末活動讓我感到自由。', dimension: 'selfNurturing' },
+          { id: 'EG4', type: 'likert', text: '獨自參與城市周末活動讓我感到充實。', dimension: 'selfNurturing' }
+        ]
       }
     ]
   }
