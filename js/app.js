@@ -10,7 +10,8 @@ const state = {
   answers: loadSavedAnswers(),
   scenario: loadAssignedScenario(),
   result: null,
-  isSubmitting: false
+  isSubmitting: false,
+  startTime: null
 };
 
 if (state.scenario) {
@@ -139,6 +140,10 @@ function startSurvey() {
   if (isSurveyCompleted()) {
     alert('你已經完成填答囉，謝謝你的幫忙！');
     return;
+  }
+
+  if (!state.startTime) {
+    state.startTime = Date.now();
   }
 
   state.currentPage = 0;
@@ -390,7 +395,7 @@ async function nextPage() {
       console.error('情境分派失敗', error);
       elements.nextBtn.disabled = false;
       elements.nextBtn.textContent = '我已閱讀並同意，開始填答';
-       alert('情境分派失敗：' + error.message);
+      alert('情境分派失敗：' + error.message);
     }
 
     return;
@@ -404,6 +409,14 @@ async function nextPage() {
     elements.nextBtn.textContent = '送出中...';
 
     try {
+      const submittedAt = new Date();
+      const startedAt = state.startTime ? new Date(state.startTime) : submittedAt;
+      const durationSeconds = Math.round((submittedAt.getTime() - startedAt.getTime()) / 1000);
+
+      state.answers.started_at = startedAt.toISOString();
+      state.answers.submitted_at = submittedAt.toISOString();
+      state.answers.duration_seconds = durationSeconds;
+
       state.result = calculateResult();
       saveAnswers();
       await submitSurvey();
