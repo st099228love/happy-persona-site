@@ -95,12 +95,12 @@ window.SPOT_POOL = {
 };
 
 window.PERSONA_SPOT_MAP = {
-  'high-independent-utilitarian': ['spot05', 'spot06', 'spot07', 'spot16', 'spot23'],
-  'high-independent-selfNurturing': ['spot01', 'spot06', 'spot14', 'spot18', 'spot21'],
-  'high-interdependent-utilitarian': ['spot09', 'spot10', 'spot17', 'spot23', 'spot26'],
+  'high-independent-utilitarian': ['spot05', 'spot06', 'spot07', 'spot16', 'spot23', 'spot24', 'spot12', 'spot03', 'spot01'],
+  'high-independent-selfNurturing': ['spot01', 'spot06', 'spot14', 'spot18', 'spot21','spot22', 'spot23', 'spot25', 'spot19', 'spot14'],
+  'high-interdependent-utilitarian': ['spot21', 'spot10', 'spot17', 'spot23', 'spot26'],
   'high-interdependent-selfNurturing': ['spot11', 'spot17', 'spot19', 'spot21', 'spot01'],
   'low-independent-utilitarian': ['spot02', 'spot12', 'spot23', 'spot24', 'spot22'],
   'low-independent-selfNurturing': ['spot06', 'spot14', 'spot18', 'spot25', 'spot24'],
-  'low-interdependent-utilitarian': ['spot09', 'spot08', 'spot13', 'spot15', 'spot20'],
-  'low-interdependent-selfNurturing': ['spot19', 'spot17', 'spot15', 'spot09', 'spot03']
+  'low-interdependent-utilitarian': ['spot25', 'spot08', 'spot13', 'spot15', 'spot20'],
+  'low-interdependent-selfNurturing': ['spot19', 'spot17', 'spot15', 'spot25', 'spot03']
 };
