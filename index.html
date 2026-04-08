@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; frame-src https://challenges.cloudflare.com; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <title>你是哪種HAPPY型人格？</title>
   <meta name="description" content="透過問卷理解你對一個人看電影的真實感受" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,6 +13,12 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <div style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+    <label for="website-field">Website</label>
+    <input id="website-field" name="website" type="text" tabindex="-1" autocomplete="off">
+    <input id="captcha-token" name="captchaToken" type="text" tabindex="-1" autocomplete="off">
+  </div>
+
   <div id="app">
     <section id="cover-screen" class="screen active">
       <div class="cover-card">

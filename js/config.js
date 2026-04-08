@@ -6,7 +6,16 @@ window.APP_CONFIG = {
   backend: {
     // 把這裡換成你部署好的 Google Apps Script Web App URL
     googleScriptUrl: 'https://script.google.com/macros/s/AKfycbxGHyanpk8dquV5VrhxM-8SeHkVb5rdxqeF3rqZ3A-y2xLb1kK2V32uDnZVFiUx-KciiA/exec',
-    enabled: true
+    enabled: true,
+    security: {
+      // 建議上線時啟用，並在 Apps Script 的 Script Properties 設定 TURNSTILE_SECRET_KEY
+      requireCaptcha: false,
+      captchaProvider: 'turnstile',
+      // 可由 Turnstile callback 把 token 填進 #captcha-token
+      captchaSiteKey: '',
+      maxSubmissionPerMinute: 3,
+      requestTtlSeconds: 600
+    }
   },
   thresholds: {
     physicalHighCutoff: 4.0,

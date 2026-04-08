@@ -1,7 +1,8 @@
 const STORAGE_KEYS = {
   answers: 'happyPersonaAnswers',
   assignedScenario: 'happyPersonaAssignedScenario',
-  completed: 'happyPersonaCompleted'
+  completed: 'happyPersonaCompleted',
+  clientId: 'happyPersonaClientId'
 };
 
 const state = {
@@ -23,6 +24,145 @@ const screens = {
   question: document.getElementById('question-screen'),
   result: document.getElementById('result-screen')
 };
+
+
+function getSurveyQuestionMap() {
+  const map = new Map();
+  const sets = window.SURVEY_SETS || {};
+
+  Object.values(sets).forEach(setGroup => {
+    const pages = Array.isArray(setGroup?.scenarioPages)
+      ? setGroup.scenarioPages
+      : Object.values(setGroup || {});
+
+    pages.forEach(page => {
+      (page?.questions || []).forEach(question => {
+        if (question?.id) {
+          map.set(question.id, question);
+        }
+      });
+    });
+  });
+
+  return map;
+}
+
+const SURVEY_QUESTION_MAP = getSurveyQuestionMap();
+
+function sanitizeScenario(value) {
+  return value === 'movie' || value === 'weekend' ? value : null;
+}
+
+function sanitizeLikertValue(value) {
+  const numeric = Number(value);
+  if (!Number.isInteger(numeric)) return null;
+  if (numeric < 1 || numeric > APP_CONFIG.likertLabels.length) return null;
+  return numeric;
+}
+
+function sanitizeChoiceValue(value, options) {
+  if (typeof value !== 'string') return null;
+  return options.includes(value) ? value : null;
+}
+
+function sanitizeTimestamp(value) {
+  if (typeof value !== 'string') return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toISOString();
+}
+
+function sanitizeDuration(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric) || numeric < 0) return null;
+  return Math.round(numeric);
+}
+
+function getClientId() {
+  const saved = localStorage.getItem(STORAGE_KEYS.clientId);
+  if (saved) return saved;
+
+  const randomPart = crypto.getRandomValues(new Uint32Array(4)).join('');
+  const clientId = `client_${Date.now()}_${randomPart}`;
+  localStorage.setItem(STORAGE_KEYS.clientId, clientId);
+  return clientId;
+}
+
+function generateNonce() {
+  const randomPart = crypto.getRandomValues(new Uint32Array(4)).join('');
+  return `nonce_${Date.now()}_${randomPart}`;
+}
+
+function getHoneypotValue() {
+  const honeypot = document.getElementById('website-field');
+  if (!honeypot) return '';
+  return String(honeypot.value || '').trim();
+}
+
+function getCaptchaToken() {
+  const tokenField = document.getElementById('captcha-token');
+  if (!tokenField) return '';
+  return String(tokenField.value || '').trim();
+}
+
+function buildSecurityPayload() {
+  return {
+    nonce: generateNonce(),
+    timestamp: new Date().toISOString(),
+    clientId: getClientId(),
+    honeypot: getHoneypotValue(),
+    captchaToken: getCaptchaToken()
+  };
+}
+
+function validateSecurityPayload(payload) {
+  const securityConfig = APP_CONFIG.backend.security || {};
+
+  if (securityConfig.requireCaptcha && !payload?.security?.captchaToken) {
+    throw new Error('缺少驗證碼，請完成人機驗證後再送出。');
+  }
+}
+
+function buildSanitizedSubmissionPayload() {
+  const sanitizedAnswers = {};
+
+  SURVEY_QUESTION_MAP.forEach((question, questionId) => {
+    const rawValue = state.answers[questionId];
+
+    if (rawValue === undefined || rawValue === null || rawValue === '') {
+      return;
+    }
+
+    if (question.type === 'likert') {
+      const cleanValue = sanitizeLikertValue(rawValue);
+      if (cleanValue !== null) {
+        sanitizedAnswers[questionId] = cleanValue;
+      }
+      return;
+    }
+
+    if (question.type === 'choice') {
+      const cleanValue = sanitizeChoiceValue(rawValue, question.options || []);
+      if (cleanValue !== null) {
+        sanitizedAnswers[questionId] = cleanValue;
+      }
+    }
+  });
+
+  const cleanStartedAt = sanitizeTimestamp(state.answers.started_at);
+  const cleanSubmittedAt = sanitizeTimestamp(state.answers.submitted_at);
+  const cleanDuration = sanitizeDuration(state.answers.duration_seconds);
+
+  if (cleanStartedAt) sanitizedAnswers.started_at = cleanStartedAt;
+  if (cleanSubmittedAt) sanitizedAnswers.submitted_at = cleanSubmittedAt;
+  if (cleanDuration !== null) sanitizedAnswers.duration_seconds = cleanDuration;
+
+  return {
+    scenario: sanitizeScenario(state.scenario),
+    answers: sanitizedAnswers,
+    security: buildSecurityPayload()
+  };
+}
 
 const elements = {
   startBtn: document.getElementById('start-btn'),
@@ -601,14 +741,13 @@ async function submitSurvey() {
     return;
   }
 
-  if (!state.scenario) {
-    throw new Error('尚未取得 scenario');
+  const payload = buildSanitizedSubmissionPayload();
+
+  if (!payload.scenario) {
+    throw new Error('尚未取得有效 scenario');
   }
 
-  const payload = {
-    scenario: state.scenario,
-    answers: state.answers
-  };
+  validateSecurityPayload(payload);
 
   const response = await fetch(APP_CONFIG.backend.googleScriptUrl, {
     method: 'POST',
